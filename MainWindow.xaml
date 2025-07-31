@@ -1,4 +1,4 @@
-﻿<Window x:Class="Contact.MainWindow"
+<Window x:Class="Contact.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -24,11 +24,11 @@
 
             <StackPanel Margin="10" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="Add" Click="Add_Click" Margin="5" Width="90" Background="GhostWhite" Foreground="RosyBrown" FontSize="15" FontFamily="Britannic Bold">Add Contact</Button>
-                <Button x:Name="Edit" Margin="5" Width="90" Background="GhostWhite" Foreground="RosyBrown" FontSize="15" FontFamily="Britannic Bold">Edit Contact</Button>
-                <Button x:Name="Delete" Margin="5" Width="110" Background="GhostWhite" Foreground="RosyBrown" FontSize="15" FontFamily="Britannic Bold">Delete Contact</Button>
+                <Button x:Name="Edit" Click="Edit_Click" Margin="5" Width="90" Background="GhostWhite" Foreground="RosyBrown" FontSize="15" FontFamily="Britannic Bold">Edit Contact</Button>
+                <Button x:Name="Delete" Click="Delete_Click" Margin="5" Width="110" Background="GhostWhite" Foreground="RosyBrown" FontSize="15" FontFamily="Britannic Bold">Delete Contact</Button>
             </StackPanel>
             
-            <ListView x:Name="list" Margin="10" Width="500">
+            <ListView x:Name="list" Margin="10" Width="500" SelectionChanged="list_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="First Name" Width="100" DisplayMemberBinding="{Binding Fname}"/>
