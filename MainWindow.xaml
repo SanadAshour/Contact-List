@@ -24,8 +24,9 @@
 
             <StackPanel Margin="10" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="Add" Click="Add_Click" Margin="5" Width="90" Background="GhostWhite" Foreground="RosyBrown" FontSize="15" FontFamily="Britannic Bold">Add Contact</Button>
-                <Button x:Name="Edit" Click="Edit_Click" Margin="5" Width="90" Background="GhostWhite" Foreground="RosyBrown" FontSize="15" FontFamily="Britannic Bold">Edit Contact</Button>
-                <Button x:Name="Delete" Click="Delete_Click" Margin="5" Width="110" Background="GhostWhite" Foreground="RosyBrown" FontSize="15" FontFamily="Britannic Bold">Delete Contact</Button>
+                <Button x:Name="Edit" Click="Edit_Click" IsEnabled="False" Margin="5" Width="90" Background="GhostWhite" Foreground="RosyBrown" FontSize="15" FontFamily="Britannic Bold">Edit Contact</Button>
+                <Button x:Name="Delete" Click="Delete_Click" IsEnabled="False" Margin="5" Width="110" Background="GhostWhite" Foreground="RosyBrown" FontSize="15" FontFamily="Britannic Bold">Delete Contact</Button>
+                <Button x:Name="Clear" Click="Clear_Click" Margin="5" Width="110" Background="GhostWhite" Foreground="RosyBrown" FontSize="15" FontFamily="Britannic Bold">Clear Fields</Button>
             </StackPanel>
             
             <ListView x:Name="list" Margin="10" Width="500" SelectionChanged="list_SelectionChanged">
