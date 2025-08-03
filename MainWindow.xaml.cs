@@ -37,8 +37,59 @@ namespace Contact
             emailTB.Clear();
         }
 
+        private bool ValidateData()
+        {
+            bool valid = true;
+            if(fnameTB.Text == "")
+            {
+                valid = false;
+                MessageBox.Show("PLEASE ENTER YOUR FIRST NAME!","ERROR!",MessageBoxButton.OK,MessageBoxImage.Error);
+            }
+            if (lnameTB.Text == "")
+            {
+                valid = false;
+                MessageBox.Show("PLEASE ENTER YOUR LAST NAME!", "ERROR!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            if (PnumTB.Text == "")
+            {
+                valid = false;
+                MessageBox.Show("PLEASE ENTER YOUR NUMBER!", "ERROR!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            if (emailTB.Text == "")
+            {
+                valid = false;
+                MessageBox.Show("PLEASE ENTER YOUR E-MAIL ADDRESS!", "ERROR!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            if (genderCB.Text == "")
+            {
+                valid = false;
+                MessageBox.Show("PLEASE SELECT YOUR GENDER!", "ERROR!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            return valid;
+        }
+
+        private void EditMode()
+        {
+            Add.IsEnabled = false;
+            Edit.IsEnabled = true;
+            Delete.IsEnabled = true;
+        }
+
+        private void NewMode()
+        {
+            Add.IsEnabled = true;
+            Edit.IsEnabled = false;
+            Delete.IsEnabled = false;
+        }
+
         private void Add_Click(object sender, RoutedEventArgs e)
         {
+            if (!ValidateData())
+            {
+                return;
+            }
+
             ADC.Add(new MyContacts
             {
                 Fname = fnameTB.Text,
@@ -49,6 +100,7 @@ namespace Contact
             });
             ADC.SaveChanges();
             ClearData();
+            NewMode();
             ShowData();
             MessageBox.Show("ITEMS ADDED!", "CONFIRMATION", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -63,11 +115,17 @@ namespace Contact
                 emailTB.Text = item.email;
                 genderCB.Text = item.gender; 
                 selectedId = item.id;
+                EditMode();
             }
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+            if (!ValidateData())
+            {
+                return;
+            }
+
             if (selectedId != 0)
             {
                 var item = ADC.MyContacts.Find(selectedId);
@@ -79,6 +137,7 @@ namespace Contact
                 ADC.MyContacts.Update(item);
                 ADC.SaveChanges();
                 ClearData();
+                NewMode();
                 MessageBox.Show("ITEM EDITED!", "CONFIRMATION", MessageBoxButton.OK, MessageBoxImage.Information);
                 ShowData();
             }
@@ -95,6 +154,12 @@ namespace Contact
                 MessageBox.Show("ITEM DELETED!", "CONFIRMATION", MessageBoxButton.OK, MessageBoxImage.Information);
                 ShowData();
             }
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            ClearData();
+            NewMode();
         }
     }
 }
