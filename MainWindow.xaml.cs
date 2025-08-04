@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,6 +20,7 @@ namespace Contact
         public MainWindow()
         {
             InitializeComponent();
+            FillCategoryCB();
             ShowData();
         }
         private AppDbContext ADC = new AppDbContext();
@@ -26,7 +28,7 @@ namespace Contact
 
         private void ShowData()
         {
-            list.ItemsSource = ADC.MyContacts.ToList();
+            list.ItemsSource = ADC.MyContacts.Include(c => c.Category).ToList();
         }
 
         private void ClearData()
@@ -35,6 +37,13 @@ namespace Contact
             lnameTB.Clear();
             PnumTB.Clear();
             emailTB.Clear();
+            genderCB.SelectedItem = null;
+            CategoryCB.SelectedItem = null;
+        }
+
+        private void FillCategoryCB()
+        {
+            CategoryCB.ItemsSource = ADC.Categories.ToList();
         }
 
         private bool ValidateData()
@@ -97,7 +106,9 @@ namespace Contact
                 PhoneNumber = int.Parse(PnumTB.Text),
                 email = emailTB.Text,
                 gender = genderCB.Text,
+                CategoryId = (int)CategoryCB.SelectedValue
             });
+
             ADC.SaveChanges();
             ClearData();
             NewMode();
@@ -115,6 +126,7 @@ namespace Contact
                 emailTB.Text = item.email;
                 genderCB.Text = item.gender; 
                 selectedId = item.id;
+                CategoryCB.SelectedValue = item.CategoryId;
                 EditMode();
             }
         }
@@ -134,6 +146,7 @@ namespace Contact
                 item.PhoneNumber = int.Parse(PnumTB.Text);
                 item.email = emailTB.Text;
                 item.gender = genderCB.Text;
+                item.CategoryId = (int)CategoryCB.SelectedValue;
                 ADC.MyContacts.Update(item);
                 ADC.SaveChanges();
                 ClearData();
@@ -161,5 +174,13 @@ namespace Contact
             ClearData();
             NewMode();
         }
+
+        private void Manage_Click(object sender, RoutedEventArgs e)
+        {
+            CategoryWindow c = new CategoryWindow();
+            c.ShowDialog();
+        }
+
+        
     }
 }
